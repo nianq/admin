@@ -17,7 +17,12 @@ Vue.use(VueRouter)
     children: [
               
             ]
-  }
+  },
+    {
+    path: '/list',
+    name: 'list',
+    component: () => import('@/views/edu/teacher/list.vue'),
+  },
 
 ]
 
