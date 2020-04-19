@@ -1,11 +1,14 @@
 <template>
     <div>
-    <el-header class="homeHeader">
-                <div class="title">哇哈哈</div>
+        <el-container>
+            <el-header class="homeHeader">
+                <div class="title">杂七杂八</div>
                 <div>
                     <el-button icon="el-icon-bell" type="text" style="margin-right: 8px;color: #000000;" size="normal"></el-button>
                     <el-dropdown class="userInfo">
-
+  <span class="el-dropdown-link">
+   gongjie
+  </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
                             <el-dropdown-item command="setting">设置</el-dropdown-item>
@@ -14,65 +17,89 @@
                     </el-dropdown>
                 </div>
             </el-header>
-
-        <el-container style="height: 500px; border: 1px solid #eee">
-  <el-aside width="200px">
-  
-    <el-menu @select="select">
-      <el-submenu index="1">
-        <template slot="title"><i class="el-icon-message"></i>导航一</template>
-          <el-menu-item index="/edu/teacher/list">选项1</el-menu-item>
+            <el-container>
+                <el-aside width="200px">
+                     <el-menu router>
+      <el-submenu index="1" v-for="(item,index) in this.$router.options.routes" v-if="!item.hidden" :key="index">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>{{item.name}}</span>
+        </template>
+          <el-menu-item :index="child.path" v-for="(child,childIndex) in item.children" :key="childIndex">{{child.name}}</el-menu-item>
       </el-submenu>
+     
     </el-menu>
-  </el-aside>
-  
-  <el-container>
-    <el-header style="text-align: right; font-size: 12px">
-      <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 15px"></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item>新增</el-dropdown-item>
-          <el-dropdown-item>删除</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <span>王小虎</span>
-    </el-header>
-    
-    <el-main>
-      <h1>首页</h1>
-    </el-main>
-  </el-container>
-</el-container>
+                </el-aside>
+                <el-main>
+                   
+                    <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">
+                        欢迎来到
+                    </div>
+                    <router-view class="homeRouterView"/>
+                </el-main>
+            </el-container>
+        </el-container>
     </div>
 </template>
 
 <script>
     export default {
         name: "Home",
-       data() {
-        return {
-        }
-      },
-        computed: {
-          
+        data() {
+           return{
+             
+           }
         },
-        methods: {
-          select(path){
-            this.$router.push(path)
+        methods:{
+          d(index){
+            console.log(index)
+            this.$router.push(index)
           }
         }
     }
 </script>
 
 <style>
-   .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
-  
-  .el-aside {
-    color: #333;
-  }
+    .homeRouterView {
+        margin-top: 10px;
+    }
+
+    .homeWelcome {
+        text-align: center;
+        font-size: 30px;
+        font-family: 华文行楷;
+        color: #409eff;
+        padding-top: 50px;
+    }
+
+    .homeHeader {
+        background-color: #409eff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0px 15px;
+        box-sizing: border-box;
+    }
+
+    .homeHeader .title {
+        font-size: 30px;
+        font-family: 华文行楷;
+        color: #ffffff
+    }
+
+    .homeHeader .userInfo {
+        cursor: pointer;
+    }
+
+    .el-dropdown-link img {
+        width: 48px;
+        height: 48px;
+        border-radius: 24px;
+        margin-left: 8px;
+    }
+
+    .el-dropdown-link {
+        display: flex;
+        align-items: center;
+    }
 </style>
