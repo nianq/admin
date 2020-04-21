@@ -33,10 +33,8 @@
 
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
-          <router-link :to="'/teacher/edit/'+scope.row.id">
             <el-button type="primary" size="mini" icon="el-icon-edit">修改</el-button>
-          </router-link>
-          <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeDataById(scope.row.id)">删除</el-button>
+          <el-button type="danger" size="mini" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -45,14 +43,12 @@
     <el-pagination
     background
     layout='sizes, prev, pager, next, jumper, ->, total, slot'
-    :total="total"  @current-change="currentChange">
+    :total="total"  @current-change="currentChange" @size-change="sizeChange">
   </el-pagination>
   </div>
 </template>
 
 <script>
-
-import teacher from '@/api/edu/teacher'
 
 export default {
     // data:{
@@ -72,12 +68,20 @@ export default {
     },
     methods :{
         getList(){
-           let url = `/eduservice/teacher/teacherQueryPage/${pageSize}/${currentPage}`,
-           this.postRequest(url,teacherQuery)
+         
+           let url = '/eduservice/teacher/teacherQueryPage/' + this.pageSize + '/' + this.currentPage
+           this.postRequest(url,this.teacherQuery).then(respones=>{
+             this.list = respones.data.list;
+             this.total = respones.data.total;
+           })
         },
         currentChange(currentChange){
             this.currentPage=currentChange
             this.getList()
+        },
+        sizeChange(pageSize){
+           this.pageSize=pageSize
+           this.getList()
         }
     }
 }
