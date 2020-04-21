@@ -1,6 +1,58 @@
 <template>
   <div class="app-container">
+    
+<!--查询表单-->
+    <el-form class="demo-form-inline" :model="teacherQuery">
+        <el-row :gutter="20" type="flex" class="row-bg" justify="space-around">
+        <el-col :span="8">
+          <el-form-item label="讲师名称：">
+          <el-input v-model="teacherQuery.name" placeholder="讲师名"/>
+        </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="讲师头衔：">
+          <el-select v-model="teacherQuery.level" clearable placeholder="讲师头衔">
+            <el-option :value="1" label="高级讲师"/>
+            <el-option :value="2" label="首席讲师"/>
+          </el-select>
+      </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20" type="flex" class="row-bg" justify="space-around">
+      <el-col :span="8">
+         <el-form-item label="添加时间：">
+          <el-date-picker
+            v-model="teacherQuery.begin"
+            type="datetime"
+            placeholder="选择开始时间"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            default-time="00:00:00"
+          />
+      </el-form-item>  
+      </el-col>
+      <el-col :span="8"> 
+        <el-form-item label="结束时间：">
+        <el-date-picker
+          v-model="teacherQuery.end"
+          type="datetime"
+          placeholder="选择截止时间"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          default-time="00:00:00"
+        />
+      </el-form-item>
+      </el-col>
+     
+    </el-row>
+     
 
+      
+
+     
+     
+   
+      <el-button type="primary" icon="el-icon-search" @click="getList()">查询</el-button>
+      <el-button type="default" @click="resetData()">清空</el-button>
+    </el-form>
 <!-- 表格 -->
     <el-table
       :data="list"
@@ -49,41 +101,53 @@
 </template>
 
 <script>
-
 export default {
-    // data:{
+  // data:{
 
-    // },
-    data(){
-        return {
-            list:null,
-            pageSize:6,
-            currentPage:1,
-            total:0,
-            teacherQuery:{}
-        }
+  // },
+  data() {
+    return {
+      list: null,
+      pageSize: 6,
+      currentPage: 1,
+      total: 0,
+      teacherQuery: {
+        name: "",
+        level: "",
+        begin: "",
+        end: ""
+      }
+    };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    //列表查询
+    getList() {
+      let url =
+        "/eduservice/teacher/teacherQueryPage/" +
+        this.pageSize +
+        "/" +
+        this.currentPage;
+      this.postRequest(url, this.teacherQuery).then(respones => {
+        this.list = respones.data.list;
+        this.total = respones.data.total;
+      });
     },
-    created(){
-        this.getList();
+    //页码改变时
+    currentChange(currentChange) {
+      this.currentPage = currentChange;
+      this.getList();
     },
-    methods :{
-        getList(){
-         
-           let url = '/eduservice/teacher/teacherQueryPage/' + this.pageSize + '/' + this.currentPage
-           this.postRequest(url,this.teacherQuery).then(respones=>{
-             this.list = respones.data.list;
-             this.total = respones.data.total;
-           })
-        },
-        currentChange(currentChange){
-            this.currentPage=currentChange
-            this.getList()
-        },
-        sizeChange(pageSize){
-           this.pageSize=pageSize
-           this.getList()
-        }
-    }
-}
+    //每页大小改变
+    sizeChange(pageSize) {
+      this.pageSize = pageSize;
+      this.getList();
+    },
+    //清空输入的值
+    resetData() {}
+  }
+};
 </script>
 
