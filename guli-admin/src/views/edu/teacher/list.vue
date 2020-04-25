@@ -42,8 +42,8 @@
      
     </el-row>
    
-      <el-button type="primary" icon="el-icon-search" @click="getList()">查询</el-button>
-      <el-button type="default" @click="resetData()">清空</el-button>
+      <el-button type="primary" icon="el-icon-search" @click="getList()" size="mini">查询</el-button>
+      <el-button type="default" @click="resetData()" size="mini">清空</el-button>
     </el-form>
   </div>
     <div style="margin-top: 10px;">
@@ -74,7 +74,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="intro" label="资历"  align="center"/>
+      <el-table-column prop="intro" label="资历"  align="center" :show-overflow-tooltip='true'/>
 
       <el-table-column prop="gmtCreate" label="添加时间"  align="center"/>
 
@@ -82,8 +82,10 @@
 
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit">修改</el-button>
-          <el-button type="danger" size="mini" icon="el-icon-delete" @click="delteTeacher(scope.row)">删除</el-button>
+            <router-link :to="'/teacher/edit/'+scope.row.id">
+              <el-button type="primary" size="mini" icon="el-icon-edit">修改</el-button>
+            </router-link>
+          <el-button type="danger" size="mini" icon="el-icon-delete" @click="delteTeacher(scope.row)" style="margin-left: 10px;">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -108,7 +110,7 @@ export default {
     return {
       loading:true,
       list: null,
-      pageSize: 6,
+      pageSize: 10,
       currentPage: 1,
       total: 0,
       teacherQuery: {
@@ -119,7 +121,7 @@ export default {
       }
     };
   },
-  created() {
+  mounted() {
     this.getList();
   },
   methods: {
@@ -158,7 +160,6 @@ export default {
           cancelButtonText: '取消',
           type: 'error'
         }).then(() => {
-         
             this.deleteRequest('/eduservice/teacher/' + data.id).then(resp=>{
               if(resp){
                 this.getList()

@@ -23,15 +23,21 @@ Vue.use(VueRouter)
     component: () => import('@/views/Home.vue'),
     children: [
       {
-        path: '/list',
+        path: '/teacher/list',
         name: '讲师列表',
         component: () => import('@/views/edu/teacher/list.vue'),
       },
       {
-        path: '/save',
+        path: '/teacher/save',
         name: '讲师添加',
         component: () => import('@/views/edu/teacher/save.vue'),
       },
+      {
+        path: '/teacher/edit/:id',   
+        name: '编辑讲师',
+        component: () => import('@/views/edu/teacher/save.vue'),        
+        hidden: true
+      }
     ]
   }
  
