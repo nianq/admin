@@ -25,7 +25,7 @@
           <i class="el-icon-location"></i>
           <span>{{item.name}}</span>
         </template>
-          <el-menu-item :index="child.path" v-for="(child,childIndex) in item.children" :key="childIndex">{{child.name}}</el-menu-item>
+          <el-menu-item :index="child.path" v-for="(child,childIndex) in item.children" :key="childIndex" v-if="!child.hidden">{{child.name}}</el-menu-item>
       </el-submenu>
      
     </el-menu>

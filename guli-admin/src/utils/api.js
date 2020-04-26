@@ -4,11 +4,11 @@ import router from '../router'
 
 axios.interceptors.response.use(success => {
     if (success.status && success.status == 200 && success.data.status == 500) {
-        Message.error({message: success.data.msg})
+        Message.error({message: success.data.message})
         return;
     }
     if (success.data.msg) {
-        Message.success({message: success.data.msg})
+        Message.success({message: success.data.message})
     }
     return success.data;
 }, error => {
@@ -20,7 +20,7 @@ axios.interceptors.response.use(success => {
         Message.error({message: '尚未登录，请登录'})
         router.replace('/');
     } else {
-        if (error.response.data.msg) {
+        if (error.response.data.message) {
             Message.error({message: error.response.data.msg})
         } else {
             Message.error({message: '未知错误!'})
