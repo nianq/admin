@@ -20,7 +20,7 @@
             <el-container>
                 <el-aside width="200px">
                      <el-menu router>
-      <el-submenu index="1" v-for="(item,index) in this.$router.options.routes" v-if="!item.hidden" :key="index">
+      <el-submenu v-for="(item,index) in this.$router.options.routes" v-if="!item.hidden" :key="index" :index="index+''">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>{{item.name}}</span>

@@ -4,21 +4,21 @@ import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Login',
     component: Login,
-    hidden:true
+    hidden: true,
   },
   {
     path: '/home',
     name: 'Home',
     component: () => import('@/views/Home.vue'),
-    hidden:true
+    hidden: true,
   },
   {
-    path: '/home',
+    path: '/teacher',
     name: '讲师管理',
     component: () => import('@/views/Home.vue'),
     children: [
@@ -33,20 +33,76 @@ Vue.use(VueRouter)
         component: () => import('@/views/edu/teacher/save.vue'),
       },
       {
-        path: '/teacher/edit/:id',   
+        path: '/teacher/edit/:id',
         name: '编辑讲师',
-        component: () => import('@/views/edu/teacher/save.vue'),        
-        hidden: true
-      }
-    ]
-  }
- 
+        component: () => import('@/views/edu/teacher/save.vue'),
+        hidden: true,
+      },
+    ],
+  },
+  {
+    path: '/subject',
+    name: '课程分类管理',
+    component: () => import('@/views/Home.vue'),
+    redirect: '/subject/list',
+    children: [
+      {
+        path: '/subject/list',
+        name: '课程分类列表',
+        component: () => import('@/views/edu/subject/list.vue'),
+      },
+      {
+        path: '/subject/import',
+        name: '课程分类导入',
+        component: () => import('@/views/edu/subject/import.vue'),
+      },
+    ],
+  },
+  {
+    path: '/course',
+    name: '课程管理',
+    component: () => import('@/views/Home.vue'),
+    redirect: '/course/list',
+    children: [
+      {
+        path: '/course/list',
+        name: '课程列表',
+        component: () => import('@/views/edu/course/list.vue'),
+      },
+      {
+        path: '/course/info',
+        name: '课程添加',
+        component: () => import('@/views/edu/course/info.vue'),
+      },
+      {
+        path: 'info/:id',
+        name: 'EduCourseInfoEdit',
+        component: () => import('@/views/edu/course/info'),
+        meta: { title: '编辑课程基本信息', noCache: true },
+        hidden: true,
+      },
+      {
+        path: 'chapter/:id',
+        name: 'EduCourseChapterEdit',
+        component: () => import('@/views/edu/course/chapter'),
+        meta: { title: '编辑课程大纲', noCache: true },
+        hidden: true,
+      },
+      {
+        path: 'publist/:id',
+        name: 'EduCoursePublishEdit',
+        component: () => import('@/views/edu/course/publish'),
+        meta: { title: '发布课程', noCache: true },
+        hidden: true,
+      },
+    ],
+  },
 ]
 
 const router = new VueRouter({
   //mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 export default router
