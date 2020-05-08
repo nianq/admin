@@ -2,27 +2,11 @@
   <div>
     <el-tag>
       <i class="el-icon-download" />
-      <el-link
-        type="primary"
-        href="'https://gongj.oss-cn-beijing.aliyuncs.com/课程分类.xlsx'"
-        >点击下载模版</el-link
-      >
+      <el-link type="primary" href="'https://gongj.oss-cn-beijing.aliyuncs.com/课程分类.xlsx'">点击下载模版</el-link>
     </el-tag>
 
-    <el-upload
-      class="upload-demo"
-      action="/eduservice/subject/addSubjcet"
-      :on-change="handleChange"
-      :on-success="fileUploadSuccess"
-      :before-upload="beforeUpload"
-      :on-error="fileUploadError"
-      :file-list="fileList"
-      ref="upload"
-      accept="application/vnd.ms-excel"
-    >
-      <el-button size="small" type="primary" style="margin-top: 10px;"
-        >点击上传</el-button
-      >
+    <el-upload class="upload-demo" action="/eduservice/subject/addSubjcet" :on-change="handleChange" :on-success="fileUploadSuccess" :before-upload="beforeUpload" :on-error="fileUploadError" :file-list="fileList" ref="upload" accept="application/vnd.ms-excel">
+      <el-button size="small" type="primary" style="margin-top: 10px;">点击上传</el-button>
     </el-upload>
   </div>
 </template>
@@ -49,7 +33,6 @@ export default {
       const extension = tmg == 'xls' || tmg == 'xlsx'
       if (!extension) {
         this.$message.error('只能上传后缀是.xlsx或.xls的文件')
-        let oldFileList = this.fileList
         this.fileList = []
       }
       return isLt2M && extension

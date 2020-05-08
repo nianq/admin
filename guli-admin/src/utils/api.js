@@ -5,7 +5,7 @@ import router from '../router'
 axios.interceptors.response.use(
   (success) => {
     console.log(success)
-    if (success.status && success.status == 200 && success.data.status == 500) {
+    if (success.status && success.status == 200 && success.data.code != 20000) {
       Message.error({ message: success.data.message })
       return
     }
@@ -16,11 +16,11 @@ axios.interceptors.response.use(
   },
   (error) => {
     console.log(error)
-    if (error.response.status == 504 || error.response.status == 404) {
+    if (error.response.code == 504 || error.response.code == 404) {
       Message.error({ message: '服务器被吃了( ╯□╰ )' })
-    } else if (error.response.status == 403) {
+    } else if (error.response.code == 403) {
       Message.error({ message: '权限不足，请联系管理员' })
-    } else if (error.response.status == 401) {
+    } else if (error.response.code == 401) {
       Message.error({ message: '尚未登录，请登录' })
       router.replace('/')
     } else {
@@ -36,7 +36,7 @@ axios.interceptors.response.use(
 
 axios.interceptors.request.use(
   (config) => {
-    console.log(1234)
+    console.log(99999)
     return config
   },
   (err) => {
