@@ -1,26 +1,26 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../views/Login.vue'
+import login from '../views/login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Login',
-    component: Login,
+    name: 'login',
+    component: login,
     hidden: true,
   },
   {
     path: '/home',
-    name: 'Home',
-    component: () => import('@/views/Home.vue'),
+    name: 'home',
+    component: () => import('@/views/home.vue'),
     hidden: true,
   },
   {
     path: '/teacher',
     name: '讲师管理',
-    component: () => import('@/views/Home.vue'),
+    component: () => import('@/views/home.vue'),
     children: [
       {
         path: '/teacher/list',
@@ -43,7 +43,7 @@ const routes = [
   {
     path: '/subject',
     name: '课程分类管理',
-    component: () => import('@/views/Home.vue'),
+    component: () => import('@/views/home.vue'),
     redirect: '/subject/list',
     children: [
       {
@@ -61,7 +61,7 @@ const routes = [
   {
     path: '/course',
     name: '课程管理',
-    component: () => import('@/views/Home.vue'),
+    component: () => import('@/views/home.vue'),
     redirect: '/course/list',
     children: [
       {

@@ -24,14 +24,21 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      courseId: '',
+    }
+  },
+  mounted() {
+    if (this.$route.params && this.$route.params.id) {
+      this.courseId = this.$route.params.id
+    }
   },
   methods: {
     previous() {
-      this.$router.push({ path: '/course/info/1' })
+      this.$router.push({ path: '/course/info/' + this.courseId })
     },
     next() {
-      this.$router.push({ path: '/course/publist/1' })
+      this.$router.push({ path: '/course/publist/' + this.courseId })
     },
   },
 }
